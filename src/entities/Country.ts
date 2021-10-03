@@ -1,3 +1,4 @@
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
   BaseEntity,
   Column,
@@ -10,14 +11,18 @@ import {
 import { Capital } from './Capital';
 import { City } from './City';
 
+@ObjectType()
 @Entity()
 export class Country extends BaseEntity {
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column()
   name: string;
 
+  @Field(() => Capital)
   @OneToOne(() => Capital)
   @JoinColumn({ name: 'capital_id' })
   capital: Capital;
