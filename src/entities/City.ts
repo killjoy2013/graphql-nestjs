@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import {
   BaseEntity,
   Column,
@@ -20,11 +20,11 @@ export class City extends BaseEntity {
   @Column()
   name: string;
 
-  @Field()
+  @Field(() => Int, { nullable: true })
   @Column({ type: 'int', nullable: true })
   population: number;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ type: 'bool', nullable: true })
   touristic: boolean;
 

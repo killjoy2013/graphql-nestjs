@@ -22,11 +22,12 @@ export class Country extends BaseEntity {
   @Column()
   name: string;
 
-  @Field(() => Capital)
+  @Field(() => Capital, { nullable: true })
   @OneToOne(() => Capital)
   @JoinColumn({ name: 'capital_id' })
   capital: Capital;
 
+  @Field(() => [City], { nullable: true })
   @OneToMany(() => City, (city) => city.country)
   cities: City[];
 }

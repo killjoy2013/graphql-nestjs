@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import {
   BaseEntity,
   Column,
@@ -17,15 +17,18 @@ export class Capital extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => Int, { nullable: true })
   @Column({ type: 'int', nullable: true, name: 'embassy_count' })
   embassyCount: number;
 
+  @Field(() => City)
   @OneToOne(() => City)
   @JoinColumn({ name: 'city_id' })
   city: City;
 
-  @OneToOne(() => Country, (country) => country.capital)
+  @OneToOne(() => Country, (country) => country.capital, {
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'country_id' })
   country: Country;
 }

@@ -10,6 +10,14 @@ export class CountryService {
   ) {}
 
   async findCountryById(id: number): Promise<Country> {
-    return await this.countryRepo.findOne(id);
+    return await this.countryRepo.findOne(id, { relations: ['cities'] });
+  }
+
+  async createCountry(name: string): Promise<Country> {
+    return await this.countryRepo.create({ name }).save();
+  }
+
+  async all(): Promise<Country[]> {
+    return await this.countryRepo.find({ relations: ['cities', 'capital'] });
   }
 }

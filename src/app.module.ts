@@ -5,6 +5,8 @@ import { City } from './entities/City';
 import { Country } from './entities/Country';
 import { CountryModule } from './country/country.module';
 import { GraphQLModule } from '@nestjs/graphql';
+import { CityModule } from './city/city.module';
+import { CapitalModule } from './capital/capital.module';
 
 @Module({
   imports: [
@@ -16,11 +18,14 @@ import { GraphQLModule } from '@nestjs/graphql';
       username: 'postgres',
       password: 'postgres',
       entities: [Country, City, Capital],
+      logging: true,
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
     CountryModule,
+    CityModule,
+    CapitalModule,
   ],
 })
 export class AppModule {}
