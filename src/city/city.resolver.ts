@@ -11,6 +11,7 @@ import { City } from 'src/entities/City';
 import { Country } from 'src/entities/Country';
 import { CityService } from './city.service';
 import { CreateCityInput } from './dto/create.city';
+import { UpdateCityInput } from './dto/update.city';
 
 @Resolver(() => City)
 export class CityResolver {
@@ -19,6 +20,11 @@ export class CityResolver {
   @Mutation(() => City)
   async addCity(@Args('input') input: CreateCityInput) {
     return await this.cityService.add(input);
+  }
+
+  @Mutation(() => City, { nullable: true })
+  async updateCity(@Args('input', { nullable: false }) input: UpdateCityInput) {
+    return await this.cityService.update(input);
   }
 
   @Query(() => [City])

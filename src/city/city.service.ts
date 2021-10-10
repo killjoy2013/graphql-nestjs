@@ -5,6 +5,7 @@ import { City } from 'src/entities/City';
 import { Country } from 'src/entities/Country';
 import { ILike, Repository } from 'typeorm';
 import { CreateCityInput } from './dto/create.city';
+import { UpdateCityInput } from './dto/update.city';
 
 @Injectable()
 export class CityService {
@@ -53,5 +54,10 @@ export class CityService {
 
   async getCountry(cityId: number): Promise<Country> {
     return await this.countryService.findByCityId(cityId);
+  }
+
+  async update(input: UpdateCityInput): Promise<City> {
+    let found = await this.cityRepo.findOne(input.id);
+    return await this.cityRepo.save({ ...found, ...input });
   }
 }

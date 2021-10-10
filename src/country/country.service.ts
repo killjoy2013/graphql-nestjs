@@ -8,7 +8,6 @@ import { Repository } from 'typeorm';
 export class CountryService {
   constructor(
     @InjectRepository(Country) private countryRepo: Repository<Country>,
-    @InjectRepository(City) private cityRepo: Repository<City>,
   ) {}
 
   async findById(id: number): Promise<Country> {
@@ -16,15 +15,11 @@ export class CountryService {
   }
 
   async findByCityId(cityId: number): Promise<Country> {
-    let dell = await this.countryRepo
+    return await this.countryRepo
       .createQueryBuilder('co')
       .innerJoin(City, 'ci', 'ci.country_id = co.id')
       .where('ci.id=:cityId', { cityId })
       .getOne();
-
-    console.log('country', dell);
-
-    return dell;
   }
 
   async add(name: string): Promise<Country> {
