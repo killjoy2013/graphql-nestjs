@@ -1,9 +1,18 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { City } from 'src/entities/City';
+import { Country } from 'src/entities/Country';
 import { CityService } from './city.service';
 import { CreateCityInput } from './dto/create.city';
 
-@Resolver()
+@Resolver(() => City)
 export class CityResolver {
   constructor(private cityService: CityService) {}
 
@@ -28,5 +37,10 @@ export class CityResolver {
       populationMax,
       touristic,
     );
+  }
+
+  @ResolveField(() => Country)
+  async country(@Parent() city: City) {
+    return await this.cityService.getCountry(city.id);
   }
 }

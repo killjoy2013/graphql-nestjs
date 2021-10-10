@@ -28,6 +28,7 @@ export class City extends BaseEntity {
   @Column({ type: 'bool', nullable: true })
   touristic: boolean;
 
+  @Field(() => Country, { nullable: true })
   @ManyToOne(() => Country, (country) => country.cities, {
     onDelete: 'SET NULL',
   })

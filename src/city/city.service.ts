@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CountryService } from 'src/country/country.service';
 import { City } from 'src/entities/City';
 import { Country } from 'src/entities/Country';
 import { ILike, Repository } from 'typeorm';
@@ -9,7 +10,7 @@ import { CreateCityInput } from './dto/create.city';
 export class CityService {
   constructor(
     @InjectRepository(City) private cityRepo: Repository<City>,
-    @InjectRepository(Country) private countryRepo: Repository<Country>,
+    private countryService: CountryService,
   ) {}
 
   async add(input: CreateCityInput) {
@@ -48,5 +49,9 @@ export class CityService {
     //     name: ILike(`%${name}%`),
     //   },
     // });
+  }
+
+  async getCountry(cityId: number): Promise<Country> {
+    return await this.countryService.findByCityId(cityId);
   }
 }

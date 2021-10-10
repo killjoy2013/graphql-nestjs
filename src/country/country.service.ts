@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { City } from 'src/entities/City';
 import { Country } from 'src/entities/Country';
 import { Repository } from 'typeorm';
 
@@ -7,13 +8,26 @@ import { Repository } from 'typeorm';
 export class CountryService {
   constructor(
     @InjectRepository(Country) private countryRepo: Repository<Country>,
+    @InjectRepository(City) private cityRepo: Repository<City>,
   ) {}
 
-  async findCountryById(id: number): Promise<Country> {
+  async findById(id: number): Promise<Country> {
     return await this.countryRepo.findOne(id, { relations: ['cities'] });
   }
 
-  async createCountry(name: string): Promise<Country> {
+  async findByCityId(cityId: number): Promise<Country> {
+    let dell = await this.countryRepo
+      .createQueryBuilder('co')
+      .innerJoin(City, 'ci', 'ci.country_id = co.id')
+      .where('ci.id=:cityId', { cityId })
+      .getOne();
+
+    console.log('country', dell);
+
+    return dell;
+  }
+
+  async add(name: string): Promise<Country> {
     return await this.countryRepo.create({ name }).save();
   }
 

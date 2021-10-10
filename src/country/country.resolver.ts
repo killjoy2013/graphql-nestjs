@@ -8,7 +8,7 @@ export class CountryResolver {
 
   @Query((returns) => Country, { nullable: true })
   async country(@Args('id', { nullable: false }) id: number) {
-    return await this.countryService.findCountryById(id);
+    return await this.countryService.findById(id);
   }
 
   @Query(() => [Country])
@@ -18,6 +18,6 @@ export class CountryResolver {
 
   @Mutation((returns) => Country)
   async addCountry(@Args('name', { nullable: false }) name: string) {
-    return await this.countryService.createCountry(name);
+    return await this.countryService.add(name);
   }
 }
