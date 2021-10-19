@@ -1,0 +1,18 @@
+{
+  "name": "countrydb",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "countrydb",
+  "synchronize": false,
+  "logging": true,
+  "entities": ["src/**/*entity.ts"],
+  "migrations": ["src/migrations/**/*.ts"],
+  "cli": {
+    "entitiesDir": "src",
+    "migrationsDir": "src/migrations"
+  },
+  "options": { "trustServerCertificate": true }
+}

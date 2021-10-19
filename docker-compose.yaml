@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  postgresql:
+    restart: always
+    image: artifactory.turkcell.com.tr/local-docker-3rd-party/com/turkcell/noderunner/tcell/postgres:10.6
+    ports:
+      - '5432:5432'
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=countrydb
+      - PG_TRUST_LOCALNET=true
+      - PG_PASSWORD=postgres
+    volumes:
+      - /var/lib/postgresql/data
