@@ -1,0 +1,92 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type City {
+  id: Int!
+  name: String!
+  touristic: Boolean
+  population: Int
+}
+
+type Country {
+  id: Int!
+  name: String!
+  population: Int
+  cities: [City!]
+  treaties: [Treaty!]
+  capital: City!
+  continent: Continent
+}
+
+enum Continent {
+  Asia
+  Europe
+  America
+  Africa
+}
+
+type Treaty {
+  id: Int!
+  name: String!
+  countries: [Country!]
+}
+
+type Query {
+  countries: [Country!]!
+  country(id: Int!): Country!
+  cities(name: String): [City!]!
+  city(id: Int!): City!
+  treaties: [Treaty!]!
+  treaty(id: Int!): Treaty!
+  runScript1: String!
+}
+
+type Mutation {
+  createCountry(input: CreateCountryInput!): Country!
+  updateCountry(input: UpdateCountryInput!): Country!
+  removeCountry(id: Int!): Int
+  addCountryToTreaty(treatyId: Int!, countryId: Int!): Country!
+  removeCountryFromTreaty(treatyId: Int!, countryId: Int!): Country!
+  createCity(input: CreateCityInput!): City!
+  updateCity(input: UpdateCityInput!): City!
+  removeCity(id: Int!): Int
+  createTreaty(input: CreateTreatyInput!): Treaty!
+  updateTreaty(input: UpdateTreatyInput!): Treaty!
+  removeTreaty(id: Int!): Treaty!
+}
+
+input CreateCountryInput {
+  name: String!
+  population: Int
+  continent: Continent
+}
+
+input UpdateCountryInput {
+  name: String
+  population: Int
+  continent: Continent
+  id: Int!
+}
+
+input CreateCityInput {
+  name: String!
+  population: Int
+  countryId: Int!
+}
+
+input UpdateCityInput {
+  name: String
+  population: Int
+  countryId: Int
+  id: Int!
+}
+
+input CreateTreatyInput {
+  name: String!
+}
+
+input UpdateTreatyInput {
+  name: String
+  id: Int!
+}
