@@ -32,6 +32,12 @@ type Treaty {
   countries: [Country!]
 }
 
+type Company {
+  id: Int
+  name: String
+  products: String
+}
+
 type Query {
   countries: [Country!]!
   country(id: Int!): Country!
@@ -40,6 +46,7 @@ type Query {
   treaties: [Treaty!]!
   treaty(id: Int!): Treaty!
   runScript1: String!
+  companies(companyName: String): [Company!]!
 }
 
 type Mutation {

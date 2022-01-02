@@ -12,6 +12,7 @@ import { TreatyModule } from './treaty/treaty.module';
 import { PythonModule } from './python/python.module';
 import { PythonRestModule } from './python-rest/python-rest.module';
 import { AuthModule } from './auth/auth.module';
+import { LegacyModule } from './legacy/legacy.module';
 
 @Module({
   imports: [
@@ -31,6 +32,18 @@ import { AuthModule } from './auth/auth.module';
       //synchronize: true,
       //logging: true,
     }),
+    TypeOrmModule.forRoot({
+      name: 'legacydb',
+      type: 'mssql',
+      host: process.env.LEGACY_DB_HOST,
+      port: parseInt(process.env.LEGACY_DB_PORT),
+      username: process.env.LEGACY_DB_USERNAME,
+      password: process.env.LEGACY_DB_PASSWORD,
+      database: process.env.LEGACY_DB_NAME,
+      extra: {
+        trustServerCertificate: true,
+      },
+    }),
 
     CountryModule,
     CityModule,
@@ -38,6 +51,7 @@ import { AuthModule } from './auth/auth.module';
     PythonModule,
     PythonRestModule,
     AuthModule,
+    LegacyModule,
   ],
   controllers: [],
   providers: [],
